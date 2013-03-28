@@ -19,7 +19,8 @@ ineachrepo() {(
     PARENTDIR="${entry%%:*}"
     repoanddir="${entry#*:}"
     SUBDIR="${repoanddir%%:*}"
-    REPO="${repoanddir#:*}"
+    REPO="${repoanddir#*:}"
+    #echo "Parent dir: $PARENTDIR repoanddir: $repoanddir Subdir: $SUBDIR  Repo: $REPO"
     $@ $PARENTDIR $SUBDIR $REPO
   done
 )}
