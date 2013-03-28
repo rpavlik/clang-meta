@@ -25,52 +25,9 @@ ineachrepo() {(
   done
 )}
 
-doclone() {(
-  PARENTDIR=$1
-  SUBDIR=$2
-  REPO=$3
-  cd ${SRCROOT}
-  mkdir -p $PARENTDIR
-  cd $PARENTDIR && git clone $REPO && cd $SUBDIR && git config branch.master.rebase true
-)}
-
-clone() {(
-  mkdir -p ${SRCROOT}
-  ineachrepo doclone
-)}
-
-reconfigure() {(
-  if [ -x "${INSTALLDIR}/bin/clang" -a -x "${INSTALLDIR}/bin/clang++" ]; then
-    echo "Using previous build of Clang for CC/CXX"
-    CC=${INSTALLDIR}/bin/clang
-    CXX=${INSTALLDIR}/bin/clang++  
-  else
-    echo "Bootstrapping - using system CC/CXX"
-  fi
-
-	mkdir -p $BUILDDIR && cd $BUILDDIR
-
-	rm -f CMakeCache.txt
-  cmake $SRCDIR \
-    -DCMAKE_INSTALL_PREFIX=$INSTALLDIR \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DLLVM_INCLUDE_EXAMPLES=OFF \
-    -DLLVM_INCLUDE_TESTS=OFF \
-    -DLLVM_TARGETS_TO_BUILD=X86
-  )
-}
-
 inbuilddir() {(
   cd $BUILDDIR && $*
   )
 }
 
-dopull() {(
-  cd ${SRCROOT} && cd $1 && cd $2 && git pull
-  )
-}
-
-pull() {
-  ineachrepo dopull
-}
 

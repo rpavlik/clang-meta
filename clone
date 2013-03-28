@@ -1,4 +1,16 @@
 #!/bin/bash -E
 source $(cd $(dirname $0) && pwd)/common.sh
 
-clone
+doclone() {(
+  PARENTDIR=$1
+  SUBDIR=$2
+  REPO=$3
+  cd ${SRCROOT}
+  mkdir -p $PARENTDIR
+  cd $PARENTDIR && git clone $REPO && cd $SUBDIR && git config branch.master.rebase true
+)}
+
+(
+  mkdir -p ${SRCROOT}
+  ineachrepo doclone
+)

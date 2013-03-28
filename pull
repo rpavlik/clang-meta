@@ -1,4 +1,10 @@
 #!/bin/bash -E
 source $(cd $(dirname $0) && pwd)/common.sh
 
-pull
+dopull() {(
+  cd ${SRCROOT} && cd $1 && cd $2 && git pull
+  )
+}
+
+
+ineachrepo dopull
