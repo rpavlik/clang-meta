@@ -3,8 +3,8 @@
 BASEDIR=$(cd $(dirname $0) && pwd)
 SRCROOT=$BASEDIR/src
 SRCDIR=$SRCROOT/llvm
-BUILDDIR=$BASEDIR/build
-INSTALLDIR=$BASEDIR/install
+BUILDDIR=$BASEDIR/builddir
+INSTALLDIR=$BASEDIR/installdir
 
 GITDIRS=(".:llvm:http://llvm.org/git/llvm.git"
          "llvm/tools:clang:http://llvm.org/git/clang.git"
