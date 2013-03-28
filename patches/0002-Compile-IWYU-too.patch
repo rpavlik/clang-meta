@@ -1,0 +1,25 @@
+From 068c370654d75d2cbeb4b6dd6ac387deaecb2dfe Mon Sep 17 00:00:00 2001
+From: Ryan Pavlik <rpavlik@iastate.edu>
+Date: Fri, 18 Jan 2013 15:36:49 -0600
+Subject: [PATCH 2/2] Compile IWYU too.
+
+---
+ tools/CMakeLists.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/tools/CMakeLists.txt b/tools/CMakeLists.txt
+index cccff5d..f6ba8fa 100644
+--- a/tools/CMakeLists.txt
++++ b/tools/CMakeLists.txt
+@@ -6,6 +6,8 @@ add_subdirectory(diagtool)
+ add_subdirectory(driver)
+ add_subdirectory(clang-check)
+ 
++add_subdirectory(include-what-you-use)
++
+ # We support checking out the clang-tools-extra repository into the 'extra'
+ # subdirectory. It contains tools developed as part of the Clang/LLVM project
+ # on top of the Clang tooling platform. We keep them in a separate repository
+-- 
+1.8.2
+
