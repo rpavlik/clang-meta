@@ -4,7 +4,8 @@ BASEDIR=$(cd $(dirname $0) && pwd)
 SRCROOT=$BASEDIR/src
 SRCDIR=$SRCROOT/llvm
 BUILDDIR=$BASEDIR/builddir
-INSTALLDIR=$BASEDIR/installdir
+INSTALLDIR=${INSTALLDIR:-$BASEDIR/installdir}
+echo "Installing to ${INSTALLDIR}"
 
 GITDIRS=(".:llvm:http://llvm.org/git/llvm.git"
          "llvm/tools:clang:http://llvm.org/git/clang.git"
