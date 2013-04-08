@@ -7,7 +7,7 @@ doclone() {(
   REPO=$3
   cd ${SRCROOT}
   mkdir -p $PARENTDIR
-  cd $PARENTDIR && git clone $REPO && cd $SUBDIR && git config branch.master.rebase true
+  cd $PARENTDIR && git clone $REPO $SUBDIR && cd $SUBDIR && git config branch.master.rebase true
 )}
 
 (
