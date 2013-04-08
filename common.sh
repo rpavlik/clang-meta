@@ -1,6 +1,10 @@
 #!/bin/bash -E
 
 BASEDIR=$(cd $(dirname $0) && pwd)
+if [ -f "${BASEDIR}/settings.sh" ]; then
+  source "${BASEDIR}/settings.sh"
+fi
+
 SRCROOT=$BASEDIR/src
 SRCDIR=$SRCROOT/llvm
 BUILDDIR=$BASEDIR/builddir
