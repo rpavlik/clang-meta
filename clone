@@ -16,5 +16,5 @@ doclone() {(
   mkdir -p ${SRCROOT}
   ineachrepo doclone
   cd ${SRCROOT}/llvm/tools/clang
-  git am ${BASEDIR}/patches/*.patch
+  git am ${BASEDIR}/patches/*.patch || (git am --abort; echo "Patches already applied!")
 )
