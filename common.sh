@@ -14,7 +14,8 @@ echo "Installing to ${INSTALLDIR}"
 GITDIRS=(".:llvm:http://llvm.org/git/llvm.git"
          "llvm/tools:clang:http://llvm.org/git/clang.git"
          "llvm/tools/clang/tools:extra:http://llvm.org/git/clang-tools-extra.git"
-         "llvm/tools/clang/tools:include-what-you-use:git://github.com/vancegroup-mirrors/include-what-you-use.git")
+         "llvm/tools/clang/tools:include-what-you-use:git://github.com/vancegroup-mirrors/include-what-you-use.git"
+         "llvm/projects:compiler-rt:https://github.com/llvm-mirror/compiler-rt.git")
 
 # TODO: should have clone commands in here too, with git config branch.master.rebase true
 
