@@ -11,6 +11,8 @@ These scripts allow you to follow the latest development (trunk/master) on:
 - [include-what-you-use][]
 - [compiler-rt][]
 
+Because these are scripts to check out git repos, not a set of submodules, the fact that this repository goes for a long time between commits doesn't mean it won't work: it just means it still works.  It's effectively "feature complete" until there's a new project I'd like built.
+
 For all of these, the git mirror is used.  In the absence of an official git mirror for include-what-you-use (IWYU), I've set up an automatic mirror here: <http://github.com/vancegroup-mirrors/include-what-you-use>
 
 The CMake build system is used. Patches are applied in the Clang tree in order to include the IWYU directory in the build.
@@ -81,4 +83,5 @@ Tested On
 ---------
 
 - Ubuntu 10.04 stock GCC
+- Ubuntu 12.04 stock GCC
 - RHEL 6 stock GCC
