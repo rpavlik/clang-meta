@@ -1,0 +1,39 @@
+From bba322a52566e275d367827713a6ca819a026a92 Mon Sep 17 00:00:00 2001
+From: Ryan Pavlik <rpavlik@iastate.edu>
+Date: Wed, 20 Nov 2013 12:47:42 -0600
+Subject: [PATCH] Add some educated guesses about libc++ install dir on Linux.
+
+Looks around clang's program dirs in addition to the hardcoded path.
+
+Patch inspired by original by jesullivan1965@hotmail.com on LLVM bug:
+http://llvm.org/bugs/show_bug.cgi?id=15885
+
+Essentially re-written to work with latest trunk and to also work with
+situations such as the use of stow, where the install directories are
+different but they're linked into the same prefix.
+---
+ lib/Driver/ToolChains.cpp | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/lib/Driver/ToolChains.cpp b/lib/Driver/ToolChains.cpp
+index 18b4a0f..d6b2987 100644
+--- a/lib/Driver/ToolChains.cpp
++++ b/lib/Driver/ToolChains.cpp
+@@ -2575,7 +2575,13 @@ void Linux::AddClangCXXStdlibIncludeArgs(const ArgList &DriverArgs,
+ 
+   // Check if libc++ has been enabled and provide its include paths if so.
+   if (GetCXXStdlibType(DriverArgs) == ToolChain::CST_Libcxx) {
+-    // libc++ is always installed at a fixed path on Linux currently.
++    const path_list & P = getProgramPaths();
++    // First look alongside the install location of the driver.
++    for (path_list::const_iterator I = P.begin(), E = P.end(); I != E; ++I) {
++        // From foo/bin to foo/include/c++/v1
++        addSystemInclude(DriverArgs, CC1Args, *I + "/../include/c++/v1");
++    }
++    //fallback on old default..
+     addSystemInclude(DriverArgs, CC1Args,
+                      getDriver().SysRoot + "/usr/include/c++/v1");
+     return;
+-- 
+1.8.4.3
+
