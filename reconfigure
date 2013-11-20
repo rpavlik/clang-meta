@@ -14,7 +14,7 @@ source $(cd $(dirname $0) && pwd)/common.sh
 
 	rm -rf CMakeCache.txt CMakeFiles
   cmake $SRCDIR \
-    -DCMAKE_INSTALL_PREFIX=$INSTALLDIR \
+    -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_INCLUDE_EXAMPLES=OFF \
     -DLLVM_INCLUDE_TESTS=OFF \

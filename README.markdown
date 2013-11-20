@@ -67,7 +67,11 @@ The directory where you've cloned this repo is the base directory for all the fo
 
 You can modify the install directory by placing a file named `settings.sh` in the base directory with a line like:
 
-    export INSTALLDIR=$HOME/llvm
+    export PREFIX=$HOME
+
+If you're using something like Stow, where you want it installed to a different directory than the prefix, specify something like:
+
+    export INSTALLDIR=$HOME/stow/llvm
 
 If you want the target set to be different than `X86`, you can include a line like:
 
