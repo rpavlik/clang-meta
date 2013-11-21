@@ -11,7 +11,7 @@ These scripts allow you to follow the latest development (trunk/master) on:
 - [include-what-you-use][]
 - After an initial bootstrapping build:
     - [compiler-rt][]
-    - [libc++][]
+    - [libc++][] with some additional configuration
 
 Because these are scripts to check out git repos, not a set of submodules, the fact that this repository goes for a long time between commits doesn't mean it won't work: it just means it still works.  It's effectively "feature complete" until there's a new project I'd like built.
 
@@ -80,7 +80,7 @@ If you want the target set to be different than `X86`, you can include a line li
 
     export TARGETS="ALL"
 
-As of right now, that's all the configuration possible (or really required).
+As of right now, that's all the configuration really required for a basic build. You can see `settings-sample.sh` for what I use (which enables libc++, etc)
 
 Using the Compiler
 ------------------
