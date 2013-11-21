@@ -3,8 +3,9 @@ source $(cd $(dirname $0) && pwd)/common.sh
 
 (
   LLVM_EXTERNAL_LIBCXX_BUILD=NO
+  LLVM_BUILD_RUNTIME=NO
   if [ -x "${PREFIX}/bin/clang" -a -x "${PREFIX}/bin/clang++" ]; then
-    echo "Using previous build of Clang for CC/CXX"
+    echo "Using previous build of Clang for CC/CXX, and building compiler-rt"
     export CC=${PREFIX}/bin/clang
     export CXX=${PREFIX}/bin/clang++
     LLVM_BUILD_RUNTIME=YES
@@ -13,11 +14,11 @@ source $(cd $(dirname $0) && pwd)/common.sh
     if [ -z ${CXXABI} ]; then
         echo "Skipping libc++ - please set CXXABI and add include paths to EXTRA_CONFIG in settings.sh"
     else
+        echo "Building libc++"
         LLVM_EXTERNAL_LIBCXX_BUILD=YES
     fi
   else
-    echo "Bootstrapping - using system CC/CXX"
-    LLVM_BUILD_RUNTIME=NO
+    echo "Bootstrapping - using system CC/CXX (and thus skipping compiler-rt and libc++ for safety)"
   fi
 
   mkdir -p $BUILDDIR && cd $BUILDDIR

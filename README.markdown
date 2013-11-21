@@ -9,9 +9,8 @@ These scripts allow you to follow the latest development (trunk/master) on:
 - [clang][]
 - [clang-tools-extra][]
 - [include-what-you-use][]
-- After an initial bootstrapping build:
-    - [compiler-rt][]
-    - [libc++][] with some additional configuration
+- [compiler-rt][] - After an initial bootstrapping build (for safety - old GCC can't do it)
+- [libc++][] - After an initial bootstrapping build and with some additional configuration
 
 Because these are scripts to check out git repos, not a set of submodules, the fact that this repository goes for a long time between commits doesn't mean it won't work: it just means it still works.  It's effectively "feature complete" until there's a new project I'd like built.
 
