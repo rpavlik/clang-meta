@@ -1,0 +1,48 @@
+From 18d1778523a39c42942d8aadb57833c25c194940 Mon Sep 17 00:00:00 2001
+From: Ryan Pavlik <rpavlik@iastate.edu>
+Date: Thu, 21 Nov 2013 12:46:49 -0600
+Subject: [PATCH] Add a new CXXABI option for old GCC as found on RHEL6
+
+---
+ CMakeLists.txt |   14 +++++++++++---
+ 1 files changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5713cb2..26e4f06 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -44,7 +44,8 @@ option(LIBCXX_ENABLE_CXX0X "Enable -std=c++0x and use of c++0x language features
+ option(LIBCXX_ENABLE_SHARED "Build libc++ as a shared library." ON)
+ option(LIBCXX_INSTALL_SUPPORT_HEADERS "Install libc++ support headers." ON)
+ 
+-set(CXXABIS none libcxxabi libcxxrt libstdc++ libsupc++)
++# libstdc++3 is for GCC around version 4.4.7/4 as found on RHEL 6
++set(CXXABIS none libcxxabi libcxxrt libstdc++ libstdc++3 libsupc++)
+ if (NOT DEFINED LIBCXX_CXX_ABI)
+   set(LIBCXX_CXX_ABI "none")
+ endif()
+@@ -134,12 +135,19 @@ macro(setup_abi_lib abipathvar abidefines abilibs abifiles abidirs)
+ endmacro()
+ 
+ if ("${LIBCXX_CXX_ABI}" STREQUAL "libstdc++" OR
++    "${LIBCXX_CXX_ABI}" STREQUAL "libstdc++3" OR
+     "${LIBCXX_CXX_ABI}" STREQUAL "libsupc++")
+   set(_LIBSUPCXX_INCLUDE_FILES
+     cxxabi.h bits/c++config.h bits/os_defines.h bits/cpu_defines.h
+-    bits/cxxabi_tweaks.h bits/cxxabi_forced.h
++    bits/cxxabi_tweaks.h
+     )
+-  if ("${LIBCXX_CXX_ABI}" STREQUAL "libstdc++")
++  if ("${LIBCXX_CXX_ABI}" STREQUAL "libstdc++3")
++    list(APPEND _LIBSUPCXX_INCLUDE_FILES cxxabi-forced.h)
++  else()
++    list(APPEND _LIBSUPCXX_INCLUDE_FILES bits/cxxabi_forced.h)
++  endif()
++
++  if ("${LIBCXX_CXX_ABI}" MATCHES "libstdc")
+     set(_LIBSUPCXX_DEFINES "-DLIBSTDCXX")
+     set(_LIBSUPCXX_LIBNAME stdc++)
+   else()
+-- 
+1.7.1
+
