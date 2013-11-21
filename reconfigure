@@ -6,7 +6,6 @@ source $(cd $(dirname $0) && pwd)/common.sh
     echo "Using previous build of Clang for CC/CXX and building libc++"
     export CC=${PREFIX}/bin/clang
     export CXX=${PREFIX}/bin/clang++
-    export CXXFLAGS=-std=c++11
     LLVM_BUILD_RUNTIME=YES
   else
     echo "Bootstrapping - using system CC/CXX"
