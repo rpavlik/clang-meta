@@ -12,9 +12,24 @@ doclone() {(
   fi
 )}
 
+dopatch() {(
+  PARENTDIR=$1
+  SUBDIR=$2
+  REPO=$3
+  # Check to see if any exist
+  if ls ${BASEDIR}/patches/${SUBDIR}*.patch >/dev/null 2>&1; then
+    echo "Applying patches to ${SUBDIR}"
+    cd ${SRCROOT}/${PARENTDIR}/${SUBDIR}
+    for patchfile in ${BASEDIR}/patches/${SUBDIR}*.patch; do
+      git am ${patchfile} >/dev/null 2>&1 && echo "Applied ${patchfile}" || (git am --abort; echo "${patchfile} already applied!")
+    done
+  else
+    echo "No patches for ${SUBDIR}"
+  fi
+
+)}
 (
   mkdir -p ${SRCROOT}
   ineachrepo doclone
-  cd ${SRCROOT}/llvm/tools/clang
-  git am ${BASEDIR}/patches/*.patch || (git am --abort; echo "Patches already applied!")
+  ineachrepo dopatch
 )
