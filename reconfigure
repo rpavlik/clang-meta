@@ -3,11 +3,14 @@ source $(cd $(dirname $0) && pwd)/common.sh
 
 (
   if [ -x "${PREFIX}/bin/clang" -a -x "${PREFIX}/bin/clang++" ]; then
-    echo "Using previous build of Clang for CC/CXX"
+    echo "Using previous build of Clang for CC/CXX and building libc++"
     export CC=${PREFIX}/bin/clang
     export CXX=${PREFIX}/bin/clang++
+    export CXXFLAGS=-std=c++11
+    LLVM_BUILD_RUNTIME=YES
   else
     echo "Bootstrapping - using system CC/CXX"
+    LLVM_BUILD_RUNTIME=NO
   fi
 
   mkdir -p $BUILDDIR && cd $BUILDDIR
@@ -18,5 +21,6 @@ source $(cd $(dirname $0) && pwd)/common.sh
     -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_INCLUDE_EXAMPLES=OFF \
     -DLLVM_INCLUDE_TESTS=OFF \
-    "-DLLVM_TARGETS_TO_BUILD=${TARGETS}"
+    "-DLLVM_TARGETS_TO_BUILD=${TARGETS}" \
+    -DLLVM_BUILD_RUNTIME=${LLVM_BUILD_RUNTIME}
 )
