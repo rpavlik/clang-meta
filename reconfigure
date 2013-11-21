@@ -2,17 +2,17 @@
 source $(cd $(dirname $0) && pwd)/common.sh
 
 (
-  if [ -x "${INSTALLDIR}/bin/clang" -a -x "${INSTALLDIR}/bin/clang++" ]; then
+  if [ -x "${PREFIX}/bin/clang" -a -x "${PREFIX}/bin/clang++" ]; then
     echo "Using previous build of Clang for CC/CXX"
-    export CC=${INSTALLDIR}/bin/clang
-    export CXX=${INSTALLDIR}/bin/clang++  
+    export CC=${PREFIX}/bin/clang
+    export CXX=${PREFIX}/bin/clang++
   else
     echo "Bootstrapping - using system CC/CXX"
   fi
 
-	mkdir -p $BUILDDIR && cd $BUILDDIR
+  mkdir -p $BUILDDIR && cd $BUILDDIR
 
-	rm -rf CMakeCache.txt CMakeFiles
+  rm -rf CMakeCache.txt CMakeFiles
   cmake $SRCDIR \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_BUILD_TYPE=Release \
