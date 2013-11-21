@@ -9,7 +9,9 @@ These scripts allow you to follow the latest development (trunk/master) on:
 - [clang][]
 - [clang-tools-extra][]
 - [include-what-you-use][]
-- [compiler-rt][]
+- After an initial bootstrapping build:
+    - [compiler-rt][]
+    - [libc++][]
 
 Because these are scripts to check out git repos, not a set of submodules, the fact that this repository goes for a long time between commits doesn't mean it won't work: it just means it still works.  It's effectively "feature complete" until there's a new project I'd like built.
 
@@ -25,6 +27,7 @@ Occasionally, Clang updates will break IWYU. IWYU is usually fairly quickly upda
 [clang-tools-extra]:http://clang.llvm.org/docs/ClangTools.html
 [include-what-you-use]:https://code.google.com/p/include-what-you-use/
 [compiler-rt]:http://compiler-rt.llvm.org/
+[libc++]:http://libcxx.llvm.org/
 
 Dependencies
 ------------
