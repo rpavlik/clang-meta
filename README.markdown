@@ -35,7 +35,7 @@ Dependencies
 - CMake (post-2.8.10 if you want compiler-rt to build, or for just llvm, clang, and iwyu an older version is OK)
 - a C/C++ compiler on your system (gcc is usually there and usually works). Note that the latest Clang/LLVM (3.5 development) requires C++11, so the following systems have known workarounds:
    - Ubuntu 12.04:
-      - Add the repo `ppa:ubuntu-toolchain-r/ppa`, upgrade, and install `libstdc++6-4.8-dev`, `g++-4.8`, and some clang package.
+      - Add the repo `ppa:ubuntu-toolchain-r/ppa` (or you may need `ppa:ubuntu-toolchain-r/test` instead), upgrade, and install `libstdc++6-4.8-dev`, `g++-4.8`, and some clang package.
       - The first time you configure (before it has bootstrapped to use itself) run `CXX=clang++ CC=clang ./reconfigure`
    - RHEL6 and siblings:
       - Install the `devtoolset-2`
