@@ -2,3 +2,6 @@
 source $(cd $(dirname $0) && pwd)/common.sh
 
 inbuilddir make $@ && inbuilddir cmake -DCMAKE_INSTALL_PREFIX=${INSTALLDIR} -P cmake_install.cmake
+
+# Install the "iwyu_tool" that lets you run IWYU on a JSON compilation database.
+install -v -C -m 755 ${SRCROOT}/llvm/tools/clang/tools/include-what-you-use/iwyu_tool.py ${INSTALLDIR}/bin/iwyu_tool
