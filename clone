@@ -32,4 +32,15 @@ dopatch() {(
   mkdir -p ${SRCROOT}
   ineachrepo doclone
   ineachrepo dopatch
+
+  CLANG_TOOLS_CMAKE=${SRCROOT}/llvm/tools/clang/tools/CMakeLists.txt
+  if grep "include-what-you-use" $CLANG_TOOLS_CMAKE; then
+    echo "Clang tools CMake already has IWYU added."
+  else
+    echo "Adding entry for IWYU to Clang tools CMake."
+    echo "add_llvm_external_project(include-what-you-use include-what-you-use)" >> $CLANG_TOOLS_CMAKE
+    (
+      cd $(dirname ${CLANG_TOOLS_CMAKE}) && git add ${CLANG_TOOLS_CMAKE} && git commit -m "Add IWYU to build system"
+    )
+  fi
 )
