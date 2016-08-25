@@ -38,7 +38,7 @@ dopatch() {(
     echo "Clang tools CMake already has IWYU added."
   else
     echo "Adding entry for IWYU to Clang tools CMake."
-    echo "add_llvm_external_project(include-what-you-use include-what-you-use)" >> $CLANG_TOOLS_CMAKE
+    echo "add_clang_subdirectory(include-what-you-use)" >> $CLANG_TOOLS_CMAKE
     (
       cd $(dirname ${CLANG_TOOLS_CMAKE}) && git add ${CLANG_TOOLS_CMAKE} && git commit -m "Add IWYU to build system"
     )
