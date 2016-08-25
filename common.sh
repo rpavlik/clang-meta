@@ -23,9 +23,22 @@ GITDIRS=(".:llvm:http://llvm.org/git/llvm.git"
 
 ineachrepo() {(
   for entry in "${GITDIRS[@]}" ; do
+
+    # Deletes the longest match of substring :* to end of string
+    # - effectively extracting the **first colon-separated field**.
     PARENTDIR="${entry%%:*}"
+
+    # Deletes the shortest match of substring *: from start of string
+    # - effectively extracting the second and third colon separated fields,
+    # to be used as an intermediate value.
     repoanddir="${entry#*:}"
+
+    # Deletes the longest match of substring :* to end of string
+    # - extracting the **second field** from the variable that had just the second and third fields.
     SUBDIR="${repoanddir%%:*}"
+
+    # Deletes the shortest match of substring *: from start of string
+    # - extracting the **third field** from the variable that had just the second and third fields.
     REPO="${repoanddir#*:}"
     #echo "Parent dir: $PARENTDIR repoanddir: $repoanddir Subdir: $SUBDIR  Repo: $REPO"
     $@ $PARENTDIR $SUBDIR $REPO
