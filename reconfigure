@@ -2,21 +2,30 @@
 source $(cd $(dirname $0) && pwd)/common.sh
 
 (
-  LLVM_EXTERNAL_LIBCXX_BUILD=NO
-  LLVM_BUILD_RUNTIME=NO
+  BUILD_LIBCXX=NO
+  BUILD_COMPILERRT=NO
   if [ -x "${PREFIX}/bin/clang" -a -x "${PREFIX}/bin/clang++" ]; then
-    echo "Using previous build of Clang for CC/CXX, and building compiler-rt"
+    echo "Using previous build of Clang for CC/CXX"
     export CC=${PREFIX}/bin/clang
     export CXX=${PREFIX}/bin/clang++
-    LLVM_BUILD_RUNTIME=YES
+    if ! subdirDisabled "compiler-rt"; then
+      echo "And, building compiler-rt!"
+      BUILD_COMPILERRT=YES
+    fi
 
 
-    if [ -z ${CXXABI} ]; then
+    if subdirDisabled "libcxx"; then
+        echo "Skipping libc++ by request - you may need to set CXXABI and add include paths to EXTRA_CONFIG in settings.sh"
+    elif [ -z ${CXXABI} ]; then
         echo "Skipping libc++ - please set CXXABI and add include paths to EXTRA_CONFIG in settings.sh"
     else
         echo "Building libc++"
-        LLVM_EXTERNAL_LIBCXX_BUILD=YES
+        BUILD_LIBCXX=YES
     fi
+    if ! [ -z ${CXXABI} ]; then
+        EXTRA_CONFIG="-DLIBCXX_CXX_ABI=${CXXABI} ${EXTRA_CONFIG}"
+    fi
+
   else
     echo "Bootstrapping - using system CC/CXX (and thus skipping compiler-rt and libc++ for safety)"
   fi
@@ -30,8 +39,7 @@ source $(cd $(dirname $0) && pwd)/common.sh
     -DLLVM_INCLUDE_EXAMPLES=OFF \
     -DLLVM_INCLUDE_TESTS=OFF \
     "-DLLVM_TARGETS_TO_BUILD=${TARGETS}" \
-    -DLLVM_BUILD_RUNTIME=${LLVM_BUILD_RUNTIME} \
-    -DLIBCXX_CXX_ABI=${CXXABI} \
-    -DLLVM_EXTERNAL_LIBCXX_BUILD=${LLVM_EXTERNAL_LIBCXX_BUILD} \
+    -DLLVM_TOOL_LIBCXX_BUILD=${BUILD_LIBCXX} \
+    -DLLVM_TOOL_COMPILER_RT_BUILD=${BUILD_COMPILERRT} \
      ${EXTRA_CONFIG}
 )

@@ -11,6 +11,7 @@ BUILDDIR=$BASEDIR/builddir
 PREFIX=${PREFIX:-$BASEDIR/installdir}
 INSTALLDIR=${INSTALLDIR:-$PREFIX}
 TARGETS=${TARGETS:-X86}
+DISABLED_REPOS=${DISABLED_REPOS:-( )}
 
 echo "Installing to ${INSTALLDIR}"
 
@@ -20,6 +21,21 @@ GITDIRS=(".:llvm:http://llvm.org/git/llvm.git"
          "llvm/tools/clang/tools:include-what-you-use:https://github.com/include-what-you-use/include-what-you-use.git"
          "llvm/projects:compiler-rt:https://github.com/llvm-mirror/compiler-rt.git"
          "llvm/projects:libcxx:http://llvm.org/git/libcxx.git")
+
+# modified from http://stackoverflow.com/questions/3685970/check-if-an-array-contains-a-value
+elementIn () {
+  local e
+  # the || true is to avoid failure in -E mode.
+  for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0 || true; done
+  return 1
+}
+
+subdirDisabled() {
+    if elementIn $1 "${DISABLED_REPOS[@]}"; then
+        return 0
+    fi
+    return 1
+}
 
 ineachrepo() {(
   for entry in "${GITDIRS[@]}" ; do
@@ -41,7 +57,10 @@ ineachrepo() {(
     # - extracting the **third field** from the variable that had just the second and third fields.
     REPO="${repoanddir#*:}"
     #echo "Parent dir: $PARENTDIR repoanddir: $repoanddir Subdir: $SUBDIR  Repo: $REPO"
-    $@ $PARENTDIR $SUBDIR $REPO
+
+    if ! subdirDisabled $SUBDIR; then
+        $@ $PARENTDIR $SUBDIR $REPO
+    fi
   done
 )}
 
@@ -49,5 +68,3 @@ inbuilddir() {(
   cd $BUILDDIR && $*
   )
 }
-
-
