@@ -1,0 +1,4 @@
+#!/bin/bash -E
+source $(cd $(dirname $0) && pwd)/common.sh
+
+inbuilddir make $@ && inbuilddir cmake -DCMAKE_INSTALL_PREFIX=${INSTALLDIR} -P cmake_install.cmake
