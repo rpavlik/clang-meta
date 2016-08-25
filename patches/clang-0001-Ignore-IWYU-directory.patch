@@ -1,14 +1,14 @@
-From 31ee05d87562604b786edad4aa6f61e37dc29484 Mon Sep 17 00:00:00 2001
+From 1a4d6a4dcbc197275b4dccc95e7c65d299e6e293 Mon Sep 17 00:00:00 2001
 From: Ryan Pavlik <rpavlik@iastate.edu>
 Date: Fri, 18 Jan 2013 15:36:40 -0600
 Subject: [PATCH 1/2] Ignore IWYU directory
 
 ---
- .gitignore |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ .gitignore | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/.gitignore b/.gitignore
-index 6c34e37..56d91a0 100644
+index fc84248..8062fe9 100644
 --- a/.gitignore
 +++ b/.gitignore
 @@ -30,6 +30,7 @@ cscope.out
@@ -20,5 +20,5 @@ index 6c34e37..56d91a0 100644
  docs/_build
  docs/analyzer/_build
 -- 
-1.7.1
+2.1.4
 
